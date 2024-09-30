@@ -8,6 +8,9 @@ import { PostServices } from "./post.service";
 
 const createPostIntoDB = catchAsync(async (req, res) => {
 
+  console.log(req.body);
+  
+
   let imagesUpload: string[] = [];
 
   if (Array.isArray(req?.files)) {
