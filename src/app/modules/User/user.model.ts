@@ -66,12 +66,13 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// set '' after saving password
+//saving password
 userSchema.post('save', function (doc, next) {
   doc.password = '';
   next();
 });
 
+// check user exiting 
 userSchema.statics.isUserExistsByEmail = async function (email: string) {
   return await User.findOne({ email }).select('+password');
 };
