@@ -6,6 +6,7 @@ export type TUser = {
   _id?: string;
   name: string;
   role: keyof typeof USER_ROLE;
+  isVerified:boolean;
   email: string;
   password: string;
   status: keyof typeof USER_STATUS;
