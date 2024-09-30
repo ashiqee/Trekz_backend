@@ -1,16 +1,18 @@
-import { QueryBuilder } from "../../builder/QueryBuilder";
-import { UserSearchableFields } from "../User/user.constant";
+
 import { IPost } from "./post.interface";
 import { Post } from "./post.model";
 
 
+
 const createPost = async (payload: IPost) => {
+
+
     const post = await Post.create(payload);
   
     return post;
   };
   
-  const getAllPostFromDB = async (query: Record<string, unknown>) => {
+  const getAllPostFromDB = async () => {
     // const posts = new QueryBuilder(Post.find(), query)
     //   .fields()
     //   .paginate()
