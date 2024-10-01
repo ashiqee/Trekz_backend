@@ -42,9 +42,24 @@ const getAllPosts = catchAsync(async (req, res) => {
   });
 
 
+//   get my posts
+const getMyPosts = catchAsync(async (req, res) => {
+
+    const data = await PostServices.getMyPostFormDB(req.query,req.params.id);
+  
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'My All posts retrived Successfully',
+      data: data,
+    });
+  });
+
+
 
 
   export const  PostControllers = {
     createPostIntoDB,
-    getAllPosts
+    getAllPosts,
+    getMyPosts
   }

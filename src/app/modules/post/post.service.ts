@@ -1,6 +1,7 @@
 
 import { IPost } from "./post.interface";
 import { Post } from "./post.model";
+import { QueryBuilder } from "../../builder/QueryBuilder";
 
 
 
@@ -28,9 +29,33 @@ const createPost = async (payload: IPost) => {
   };
 
 
+  const getMyPostFormDB = async(
+    query: Record<string, unknown>, 
+    id: string 
+  ) => {
+    try {
+   
+      let postQuery = Post.find({ user: id }).populate("user","name profilePhoto isVerified");
+  
+     
+      postQuery = new QueryBuilder(postQuery, query).build(); 
+  
+   
+      const posts = await postQuery.exec(); 
+  
+   
+  
+      return posts;
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      throw new Error("Failed to get posts from the database.");
+    }
+  };
+
 
 
   export const PostServices = {
     createPost,
-    getAllPostFromDB
+    getAllPostFromDB,
+    getMyPostFormDB
   }

@@ -19,7 +19,7 @@ router.post(
 );
 router.get('/', PostControllers.getAllPosts);
 
-// router.get('/:id', UserControllers.getSingleUser);
+router.get('/my/:id', PostControllers.getMyPosts);
 
 
 

@@ -50,18 +50,21 @@ const userSchema = new Schema<TUser, IUserModel>(
       type: Boolean,
       default:false,
     },
-    follow:{
-      type: Boolean,
-      default:false,
-    },
-    followers:{
-      type: Boolean,
-      default:false,
-    },
-    blockUser:{
-      type: Boolean,
-      default:false,
-    },
+    follow:[{
+      type: Schema.Types.ObjectId,
+      ref:"User",
+      default:null,
+    }],
+    followers:[{
+      type: Schema.Types.ObjectId,
+      ref:"User",
+      default:null,
+    }],
+    blockUser:[{
+      type: Schema.Types.ObjectId,
+      ref:"User",
+      default:null,
+    }],
   },
   {
     timestamps: true,

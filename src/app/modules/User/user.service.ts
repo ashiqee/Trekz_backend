@@ -23,32 +23,15 @@ const getAllUsersFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleUserFromDB = async (id: string) => {
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("follow followers","name profilePhoto");
 
   return user;
 };
 
 
-//add follows
-
-const addFollowToDB = async(id:string,playLoad:{followId:string})=>{
-  // add follow
-  const user = await User.findByIdAndUpdate(id,
-    {$push:{follow: playLoad.followId}}
-  )
-
-  // add Followers
-  const followeUser = await User.findByIdAndUpdate(playLoad.followId,
-    {$push:{followers:id}}
-  )
-
-  return { user, followeUser}
-
-}
 
 export const UserServices = {
   createUser,
   getAllUsersFromDB,
-  getSingleUserFromDB,
-  addFollowToDB
+  getSingleUserFromDB
 };
