@@ -1,5 +1,25 @@
 import mongoose, { Schema } from 'mongoose';
-import { IComment, IPost } from './post.interface';
+import { IComment, IPost, IReplies } from './post.interface';
+
+
+
+const replySchema = new Schema<IReplies>(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    replyText: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 
 // comment Schema
 const commentSchema = new Schema<IComment>(
@@ -18,6 +38,7 @@ const commentSchema = new Schema<IComment>(
       type: String,
       required: true,
     },
+    replies: [replySchema] ,
   },
   {
     timestamps: true,
@@ -36,12 +57,20 @@ const postSchema = new Schema<IPost>({
   postContent: {
     type: String,
   },
+  categories:{
+    type: [String],
+  },
+  
+  tags:{
+    type: [String],
+  },
+
   video: { type: String },
   images: [{ type: String }],
   isPremium: { type: Boolean, default: false },
   upVotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   downVotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  comments: [{ type: commentSchema }],
+  comments: [commentSchema],
 },{
     timestamps:true,
 

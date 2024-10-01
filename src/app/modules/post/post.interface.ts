@@ -10,13 +10,20 @@ export interface IPost extends Document {
   upVotes: Types.ObjectId[]; 
   downVotes: Types.ObjectId[]; 
   comments: IComment[];
+  tags?: string[];
+  categories: string[];
   
 }
 
+export interface IReplies extends Document  {
+  user:ObjectId;
+  replyText:string;
+}
 // Comment Interface
 export interface IComment extends Document {
   user: ObjectId;
   post: ObjectId;
   commentText: string;
+  replies?: IReplies[];
  }
 
