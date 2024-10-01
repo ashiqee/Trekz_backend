@@ -49,7 +49,19 @@ const userSchema = new Schema<TUser, IUserModel>(
     isVerified:{
       type: Boolean,
       default:false,
-    }
+    },
+    follow:{
+      type: Boolean,
+      default:false,
+    },
+    followers:{
+      type: Boolean,
+      default:false,
+    },
+    blockUser:{
+      type: Boolean,
+      default:false,
+    },
   },
   {
     timestamps: true,

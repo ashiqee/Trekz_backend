@@ -13,6 +13,9 @@ export type TUser = {
   passwordChangedAt?: Date;
   mobileNumber?: string;
   profilePhoto?: string;
+  follow?:string[];
+  followers?:string[];
+  blockUser?:string[];
   createdAt?: Date;
   updatedAt?: Date;
 };

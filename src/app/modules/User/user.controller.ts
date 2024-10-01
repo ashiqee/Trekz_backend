@@ -36,8 +36,20 @@ const getSingleUser = catchAsync(async (req, res) => {
   });
 });
 
+const addFollow = catchAsync(async (req, res) => {
+  const result = await UserServices.addFollowToDB(req.params.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Add Follewer Successfully',
+    data: result,
+  });
+});
+
 export const UserControllers = {
   getSingleUser,
   userRegister,
   getAllUsers,
+  addFollow
 };
