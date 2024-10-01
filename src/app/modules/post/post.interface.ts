@@ -1,4 +1,4 @@
-import { Document, ObjectId } from "mongoose";
+import { Document, ObjectId, Types } from "mongoose";
 
 // Post Interface
 export interface IPost extends Document {
@@ -7,8 +7,8 @@ export interface IPost extends Document {
   video?: string;
   images?: string[];
   isPremium: boolean;
-  upVotes: string[]; 
-  downVotes: string[]; 
+  upVotes: Types.ObjectId[]; 
+  downVotes: Types.ObjectId[]; 
   comments: IComment[];
   
 }

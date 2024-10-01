@@ -56,10 +56,40 @@ const getMyPosts = catchAsync(async (req, res) => {
   });
 
 
+  const upvotePostInPost = catchAsync(async (req, res) => {
+
+    const {postId, userId}= req.body
+
+    const data = await PostServices.upvotePost(postId,userId);
+  
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'UpVote added Successfully',
+      data: data,
+    });
+  });
+
+  const downVotesPostInPost = catchAsync(async (req, res) => {
+
+    const {postId, userId}= req.body
+
+    const data = await PostServices.downVotesPost(postId,userId);
+  
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'DownVote added Successfully',
+      data: data,
+    });
+  });
+
 
 
   export const  PostControllers = {
     createPostIntoDB,
     getAllPosts,
-    getMyPosts
+    getMyPosts,
+    upvotePostInPost,
+    downVotesPostInPost
   }

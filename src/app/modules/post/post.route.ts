@@ -22,6 +22,7 @@ router.get('/', PostControllers.getAllPosts);
 router.get('/my/:id', PostControllers.getMyPosts);
 
 
-
+router.put('/upvote', auth(USER_ROLE.USER) , PostControllers.upvotePostInPost)
+router.put('/downvote', auth(USER_ROLE.USER) , PostControllers.downVotesPostInPost)
 
 export const PostRoutes = router;
