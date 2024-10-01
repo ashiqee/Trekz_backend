@@ -7,7 +7,8 @@ import { FollewerServices } from "./follow.service";
 
 
 const addFollow = catchAsync(async (req, res) => {
-    const result = await FollewerServices.addFollowToDB(req.params.id,req.body);
+  const playload = req.body
+    const result = await FollewerServices.addFollowToDB(playload);
   
     sendResponse(res, {
       success: true,
@@ -17,7 +18,20 @@ const addFollow = catchAsync(async (req, res) => {
     });
   });
 
+const removeFollow = catchAsync(async (req, res) => {
+  const playload = req.body
+    const result = await FollewerServices.removeFollowFromDB(playload);
+  
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Remove Follewer Successfully',
+      data: result,
+    });
+  });
+
 
   export const FollewerControllers ={
-    addFollow
+    addFollow,
+    removeFollow
   }

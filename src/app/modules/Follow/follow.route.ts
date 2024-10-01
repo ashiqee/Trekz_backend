@@ -13,10 +13,15 @@ const router = express.Router();
 
 
 router.put(
-  '/:id',
+  '/add',
   auth(USER_ROLE.USER),
-  // validateRequest(UserValidation.createUserValidationSchema),
-  FollewerControllers.addFollow
+    FollewerControllers.addFollow
+);
+router.put(
+  '/remove',
+  auth(USER_ROLE.USER),
+ 
+  FollewerControllers.removeFollow
 );
 
 
