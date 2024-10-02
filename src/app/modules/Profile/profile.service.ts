@@ -19,6 +19,17 @@ const getMyProfile = async (user: JwtPayload) => {
     return profile;
 };
 
+// Other profile 
+const getOtherProfile = async (userId:string) => {
+    const getUser = await User.findById(userId);
+
+    if (!getUser) {
+        throw new AppError(httpStatus.NOT_FOUND, "User does not exixts!")
+    };
+
+    return getUser;
+};
+
 const updateMyProfile = async (
     user: JwtPayload,
     data: Partial<TUserProfileUpdate>,
@@ -45,7 +56,10 @@ const updateMyProfile = async (
     return await User.findOneAndUpdate(filter, data, { new: true });
 };
 
+
+
 export const ProfileServices = {
     getMyProfile,
-    updateMyProfile
+    updateMyProfile,
+    getOtherProfile
 }

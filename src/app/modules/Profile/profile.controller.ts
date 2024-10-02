@@ -17,6 +17,18 @@ const getMyProfile = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const getOtherProfileFromDB = catchAsync(async (req: Request, res: Response) => {
+    const userId = req.params.id;
+    const result = await ProfileServices.getOtherProfile(userId);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Other Profile Retrive Successfully',
+        data: result,
+    });
+});
+
 const updateMyProfile = catchAsync(async (req, res) => {
 
     const result = await ProfileServices.updateMyProfile(
@@ -35,5 +47,6 @@ const updateMyProfile = catchAsync(async (req, res) => {
 
 export const ProfileController = {
     getMyProfile,
-    updateMyProfile
+    updateMyProfile,
+    getOtherProfileFromDB
 }

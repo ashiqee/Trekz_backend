@@ -13,6 +13,12 @@ router.get(
     ProfileController.getMyProfile
 );
 
+router.get(
+    '/:id',
+    auth(USER_ROLE.ADMIN, USER_ROLE.USER),
+    ProfileController.getOtherProfileFromDB
+);
+
 router.patch(
     '/',
     auth(USER_ROLE.ADMIN, USER_ROLE.USER),
