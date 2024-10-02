@@ -10,6 +10,8 @@ const createPost = async (payload: IPost) => {
 };
 
 const getAllPostFromDB = async (query: Record<string, unknown>) => {
+
+ 
   const posts = new QueryBuilder(Post.find(), query)
     .fields()
     .paginate()
