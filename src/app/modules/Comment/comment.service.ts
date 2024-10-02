@@ -4,6 +4,10 @@ import { Comment, Post } from "../Post/post.model";
 
 
 const createComment = async (userId: string, postId: string, commentText: string) => {
+ 
+  console.log(userId);
+  
+  try{
     const newComment = new Comment({
       user: userId,
       post: postId,
@@ -13,22 +17,32 @@ const createComment = async (userId: string, postId: string, commentText: string
 
     const res= await newComment.save()
 
-    if(res){
-        const postDetails = await Post.findByIdAndUpdate(postId,{
-            $push: {comments: res._id }
-        })
-        console.log(postDetails);
+   
+       await Post.findByIdAndUpdate(postId,{
+            $push: {comments: res }
+        },
+        {new:true}
+      ).populate('comments');
+
+    
         
-    }
+    
 
     return res;
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   }catch(err:any){
+    throw new Error(err)
+   }
 
 }
 
 
 
 const editComment = async (commentId: string, userId: string, commentText: string) => {
-    const comment = await Comment.findById(commentId);
+   
+  
+  
+  const comment = await Comment.findById(commentId);
   
     if (!comment) {
       throw new Error('Comment not found');
@@ -46,16 +60,24 @@ const editComment = async (commentId: string, userId: string, commentText: strin
   };
 
 
-  const deleteComment = async (commentId: string, userId: string) => {
+  const deleteComment = async (commentId: string) => {
 
+    
     const comment = await Comment.findById(commentId);
+
+   
+    
     if(!comment){
         throw new Error("Comment not found");
     }
 
-    if(comment.user.toString()!== userId){
-        throw new Error("Not Authrized delete this comment")
-    }
+
+     await Post.findByIdAndUpdate(
+      comment.post,
+      { $pull: { comments: { _id: commentId } } }, 
+      { new: true } 
+    )
+
 
     const result = await Comment.findByIdAndDelete(commentId);
   

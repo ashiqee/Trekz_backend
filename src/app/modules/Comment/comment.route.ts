@@ -9,4 +9,6 @@ const router = express.Router();
 
 router.post('/', auth(USER_ROLE.USER), CommentControllers.createCommentIntoDb);
 
+router.delete('/delete/:commentId', auth(USER_ROLE.USER), CommentControllers.deleteCommenFromDb);
+
 export const CommentsRoutes = router;

@@ -5,13 +5,33 @@ import { commentServices } from "./comment.service";
 
 
 const createCommentIntoDb = catchAsync(async (req, res) => {
-    const {userId,postId,commnetText} = req.body
-      const result = await commentServices.createComment(userId,postId,commnetText);
+
+ 
+  
+    const {userId,postId,commentText} = req.body
+      const result = await commentServices.createComment(userId,postId,commentText);
     
       sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,
-        message: 'Remove Follewer Successfully',
+        message: 'Create comment Successfully',
+        data: result,
+      });
+    });
+
+
+const deleteCommenFromDb = catchAsync(async (req, res) => {
+
+      
+  const commentId = req.params.id
+console.log(commentId);
+
+      const result = await commentServices.deleteComment(commentId);
+    
+      sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Delete comment Successfully',
         data: result,
       });
     });
@@ -19,5 +39,6 @@ const createCommentIntoDb = catchAsync(async (req, res) => {
 
 
     export const CommentControllers = {
-        createCommentIntoDb
+        createCommentIntoDb,
+        deleteCommenFromDb
     }

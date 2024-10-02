@@ -19,7 +19,9 @@ router.post(
 );
 router.get('/', PostControllers.getAllPosts);
 
-router.get('/my/:id', PostControllers.getMyPosts);
+router.get('/:id', auth(USER_ROLE.USER,USER_ROLE.ADMIN), PostControllers.getAPosts);
+
+router.get('/my/:id', auth(USER_ROLE.USER,USER_ROLE.ADMIN), PostControllers.getMyPosts);
 
 
 router.put('/upvote', auth(USER_ROLE.USER) , PostControllers.upvotePostInPost)

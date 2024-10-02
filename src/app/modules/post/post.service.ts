@@ -17,10 +17,31 @@ const getAllPostFromDB = async () => {
   //   .filter()
   //   .search(UserSearchableFields);
   const posts = await Post.find()
-    .populate('user')
+  .populate({
+    path: 'comments',
+    populate: {
+      path: 'user', // Populate the user inside each comment
+      select: 'name profilePhoto', // Choose the fields you want to retrieve
+    },
+  })
+  .populate({
+    path: 'user', // Populate the user of the post
+    select: 'name profilePhoto', // Choose the fields you want to retrieve
+  })
     .sort({ createdAt: -1, upVotes: -1 });
 
   // const result = await posts.modelQuery;
+
+  return posts;
+};
+
+const getAPostFromDB = async (id:string) => {
+  console.log(id);
+  
+  const posts = await Post.findById(id)
+    .populate('user')
+    
+
 
   return posts;
 };
@@ -108,6 +129,7 @@ const downVotesPost = async (postId: string, userId: string) => {
 export const PostServices = {
   createPost,
   getAllPostFromDB,
+  getAPostFromDB,
   getMyPostFormDB,
   upvotePost,
   downVotesPost,

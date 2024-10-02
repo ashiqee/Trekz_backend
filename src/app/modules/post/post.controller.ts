@@ -41,6 +41,19 @@ const getAllPosts = catchAsync(async (req, res) => {
     });
   });
 
+//   get Single post 
+const getAPosts = catchAsync(async (req, res) => {
+
+    const data = await PostServices.getAPostFromDB(req.params.id);
+  
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Get single post retrived Successfully',
+      data: data,
+    });
+  });
+
 
 //   get my posts
 const getMyPosts = catchAsync(async (req, res) => {
@@ -89,7 +102,9 @@ const getMyPosts = catchAsync(async (req, res) => {
   export const  PostControllers = {
     createPostIntoDB,
     getAllPosts,
+    getAPosts,
     getMyPosts,
     upvotePostInPost,
     downVotesPostInPost
+
   }
