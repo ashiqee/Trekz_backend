@@ -5,6 +5,7 @@ import httpStatus from "http-status";
 import { USER_STATUS } from "../User/user.constant";
 import { TImageFile } from "../../interfaces/image.interface";
 import { TUserProfileUpdate } from "./profile.interface";
+import { Post } from "../Post/post.model";
 
 const getMyProfile = async (user: JwtPayload) => {
     const profile = await User.findOne({
@@ -27,7 +28,9 @@ const getOtherProfile = async (userId:string) => {
         throw new AppError(httpStatus.NOT_FOUND, "User does not exixts!")
     };
 
-    return getUser;
+    const userPosts = await Post.find({user:userId})
+
+    return {getUser,userPosts  };
 };
 
 const updateMyProfile = async (

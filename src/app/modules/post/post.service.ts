@@ -9,34 +9,33 @@ const createPost = async (payload: IPost) => {
   return post;
 };
 
-const getAllPostFromDB = async () => {
-  // const posts = new QueryBuilder(Post.find(), query)
-  //   .fields()
-  //   .paginate()
-  //   .sort()
-  //   .filter()
-  //   .search(UserSearchableFields);
-  const posts = await Post.find()
-  .populate({
-    path: 'comments',
-    populate: {
-      path: 'user', // Populate the user inside each comment
+const getAllPostFromDB = async (query: Record<string, unknown>) => {
+  const posts = new QueryBuilder(Post.find(), query)
+    .fields()
+    .paginate()
+    .sort()
+    .filter()
+    .search(['postContent', 'categories', 'tags']) 
+    .build();
+
+  const result = await posts
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'user', // Populate the user inside each comment
+        select: 'name profilePhoto', // Choose the fields you want to retrieve
+      },
+    })
+    .populate({
+      path: 'user', // Populate the user of the post
       select: 'name profilePhoto', // Choose the fields you want to retrieve
-    },
-  })
-  .populate({
-    path: 'user', // Populate the user of the post
-    select: 'name profilePhoto', // Choose the fields you want to retrieve
-  })
-    .sort({ createdAt: -1, upVotes: -1 });
+    });
 
-  // const result = await posts.modelQuery;
-
-  return posts;
+  return result;
 };
 
 const getAPostFromDB = async (id:string) => {
-  console.log(id);
+ 
   
   const posts = await Post.findById(id)
     .populate('user')

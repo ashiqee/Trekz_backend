@@ -42,13 +42,20 @@ export class QueryBuilder<T> {
   }
 
   sort() {
-    let sortBy = '-createdAt'; // Default sort by creation date in descending order
+    let sortBy = '-createdAt'; 
 
     if (this.query?.sortBy) {
       sortBy = this.query.sortBy as string;
     }
 
-    this.modelQuery = this.modelQuery.sort(sortBy);
+
+    if(sortBy === 'upVotes'){
+      this.modelQuery = this.modelQuery.sort({upVotes:-1});
+    }else{
+      
+      this.modelQuery = this.modelQuery.sort(sortBy);
+    }
+
     return this;
   }
 
