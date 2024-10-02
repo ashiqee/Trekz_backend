@@ -29,6 +29,10 @@ const getOtherProfile = async (userId:string) => {
     };
 
     const userPosts = await Post.find({user:userId})
+    .populate({
+        path:"user",
+        select:"name profilePhoto"
+    })
 
     return {getUser,userPosts  };
 };
