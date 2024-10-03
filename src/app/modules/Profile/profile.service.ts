@@ -46,9 +46,14 @@ const updateMyProfile = async (
         email: user.email,
         status: USER_STATUS.ACTIVE
     };
+   
+    
+    
 
     const profile = await User.findOne(filter);
 
+    
+    
     if (!profile) {
         throw new AppError(httpStatus.NOT_FOUND, "User profile does not exixts!")
     };
@@ -59,8 +64,13 @@ const updateMyProfile = async (
     else {
         delete data.profilePhoto;
     };
+  
+    
 
-    return await User.findOneAndUpdate(filter, data, { new: true });
+        const res= await User.findOneAndUpdate(filter, data, { new: true });
+
+
+    return res;
 };
 
 

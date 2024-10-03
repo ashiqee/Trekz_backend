@@ -19,7 +19,7 @@ router.get(
     ProfileController.getOtherProfileFromDB
 );
 
-router.patch(
+router.put(
     '/',
     auth(USER_ROLE.ADMIN, USER_ROLE.USER),
     multerUpload.single('profilePhoto'),
