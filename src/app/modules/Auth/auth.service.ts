@@ -106,6 +106,11 @@ const changePassword = async (
   userData: JwtPayload,
   payload: { oldPassword: string; newPassword: string }
 ) => {
+
+
+ 
+  
+
   // checking if the user is exist
   const user = await User.isUserExistsByEmail(userData.email);
 
