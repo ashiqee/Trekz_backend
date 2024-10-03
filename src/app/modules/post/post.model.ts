@@ -5,11 +5,10 @@ import { IComment, IPost, IReplies } from './post.interface';
 
 const replySchema = new Schema<IReplies>(
   {
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
+      
+   },
     replyText: {
       type: String,
       required: true,
@@ -68,8 +67,8 @@ const postSchema = new Schema<IPost>({
   video: { type: String },
   images: [{ type: String }],
   isPremium: { type: Boolean, default: false },
-  upVotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  downVotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  upVotes: [{ type: [String],  }],
+  downVotes: [{ type: [String],  }],
   comments: [commentSchema],
 },{
     timestamps:true,

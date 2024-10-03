@@ -10,14 +10,12 @@ const createPost = async (payload: IPost) => {
 };
 
 const getAllPostFromDB = async (query: Record<string, unknown>) => {
-
- 
   const posts = new QueryBuilder(Post.find(), query)
     .fields()
     .paginate()
     .sort()
     .filter()
-    .search(['postContent', 'categories', 'tags']) 
+    .search(['postContent', 'categories', 'tags'])
     .build();
 
   const result = await posts
@@ -36,13 +34,8 @@ const getAllPostFromDB = async (query: Record<string, unknown>) => {
   return result;
 };
 
-const getAPostFromDB = async (id:string) => {
- 
-  
-  const posts = await Post.findById(id)
-    .populate('user')
-    
-
+const getAPostFromDB = async (id: string) => {
+  const posts = await Post.findById(id).populate('user');
 
   return posts;
 };
@@ -59,9 +52,9 @@ const getMyPostFormDB = async (query: Record<string, unknown>, id: string) => {
     const posts = await postQuery.exec();
 
     return posts;
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-    throw new Error('Failed to get posts from the database.');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    throw new Error(error);
   }
 };
 
@@ -76,16 +69,23 @@ const upvotePost = async (postId: string, userId: string) => {
       throw new Error('Post not found');
     }
 
-    const userObjectId = new mongoose.Types.ObjectId(userId);
-
-    if (post.upVotes.includes(userObjectId)) {
-      post.upVotes.pull(userObjectId);
+    if (post.upVotes.includes(userId)) {
+      await Post.updateOne(
+        { _id: postId },
+        { $pull: { upVotes: userId } },
+        { session }
+      );
     } else {
-      post.downVotes.pull(userObjectId);
-      post.upVotes.push(userObjectId);
+      await Post.updateOne(
+        { _id: postId },
+        {
+          $pull: { downVotes: userId },
+          $addToSet: { upVotes: userId },
+        },
+        { session }
+      );
     }
 
-    await post.save({ session });
     await session.commitTransaction();
     return post;
   } catch (err) {
@@ -107,16 +107,25 @@ const downVotesPost = async (postId: string, userId: string) => {
       throw new Error('Post not found');
     }
 
-    const userObjectId = new mongoose.Types.ObjectId(userId);
+  
 
-    if (post.downVotes.includes(userObjectId)) {
-      post.downVotes.pull(userObjectId);
+    if (post.downVotes.includes(userId)) {
+      await Post.updateOne(
+        { _id: postId },
+        { $pull: { downVotes: userId } },
+        { session }
+      );
     } else {
-      post.upVotes.pull(userObjectId);
-      post.downVotes.push(userObjectId);
+      await Post.updateOne(
+        { _id: postId },
+        {
+          $pull: { upVotes: userId },
+          $addToSet: { downVotes: userId },
+        },
+        { session }
+      );
     }
 
-    await post.save({ session });
     await session.commitTransaction();
     return post;
   } catch (err) {

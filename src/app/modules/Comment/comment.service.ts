@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+
 import { Comment, Post } from "../Post/post.model";
 
 
 
 const createComment = async (userId: string, postId: string, commentText: string) => {
  
-  console.log(userId);
+ 
   
   try{
     const newComment = new Comment({
@@ -99,9 +99,14 @@ const editComment = async (commentId: string, userId: string, commentText: strin
     if (!comment) {
       throw new Error('Comment not found');
     }
-    const userObjectId = new mongoose.Types.ObjectId(userId);
 
-    comment.replies?.push({ user: userObjectId, replyText });
+    if (!comment.replies) {
+      comment.replies = [];
+    }
+    const reply = { userId, replyText };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    comment.replies.push(reply as any);
+
     await comment.save();
   
     return comment; 

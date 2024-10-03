@@ -7,6 +7,7 @@ import { TImageFile } from "../../interfaces/image.interface";
 import { TUserProfileUpdate } from "./profile.interface";
 import { Post } from "../Post/post.model";
 
+
 const getMyProfile = async (user: JwtPayload) => {
     const profile = await User.findOne({
         email: user.email,
