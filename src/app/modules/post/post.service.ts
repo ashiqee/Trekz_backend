@@ -22,13 +22,13 @@ const getAllPostFromDB = async (query: Record<string, unknown>) => {
     .populate({
       path: 'comments',
       populate: {
-        path: 'user', // Populate the user inside each comment
-        select: 'name profilePhoto', // Choose the fields you want to retrieve
+        path: 'user', 
+        select: 'name profilePhoto isVerified', 
       },
     })
     .populate({
-      path: 'user', // Populate the user of the post
-      select: 'name profilePhoto', // Choose the fields you want to retrieve
+      path: 'user', 
+      select: 'name profilePhoto isVerified', 
     });
 
   return result;

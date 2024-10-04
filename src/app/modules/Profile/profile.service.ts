@@ -25,7 +25,7 @@ const getMyProfile = async (user: JwtPayload) => {
 
 // Other profile 
 const getOtherProfile = async (userId:string) => {
-    const getUser = await User.findById(userId).populate("follow followers","name profilePhoto");
+    const getUser = await User.findById(userId).populate("follow followers","name profilePhoto isVerified");
 
     if (!getUser) {
         throw new AppError(httpStatus.NOT_FOUND, "User does not exixts!")
@@ -34,7 +34,7 @@ const getOtherProfile = async (userId:string) => {
     const userPosts = await Post.find({user:userId})
     .populate({
         path:"user",
-        select:"name profilePhoto"
+        select:"name profilePhoto isVerified"
     })
 
     return {getUser,userPosts  };
