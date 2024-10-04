@@ -80,7 +80,7 @@ const updateMyProfile = async (
 
 // Profile verification and premium user 
 
-const createPremiumUserIntoDB = async (payload,userId) => {
+const createPremiumUserIntoDB = async (payload:{plan:string},userId:string) => {
     const transactionId = `txn-${Date.now()}`;
   
     const orderData = { ...payload, transactionId }; 
