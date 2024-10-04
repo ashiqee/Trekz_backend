@@ -27,4 +27,11 @@ router.put(
     ProfileController.updateMyProfile
 )
 
+
+router.post(
+    '/subcribe',
+    auth(USER_ROLE.ADMIN, USER_ROLE.USER),
+      ProfileController.createPremiumUser
+)
+
 export const ProfileRoutes = router;

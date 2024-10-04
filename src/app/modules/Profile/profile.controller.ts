@@ -5,6 +5,25 @@ import httpStatus from "http-status";
 import { ProfileServices } from "./profile.service";
 import { TImageFile } from "../../interfaces/image.interface";
 
+
+
+
+const createPremiumUser = catchAsync(async (req,res)=>{
+    const userId = req.user;
+    const payload=req.body;
+
+const result = await ProfileServices.createPremiumUserIntoDB(payload,userId);
+
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Subcription created Successfully',
+        data: result,
+    });
+})
+
+
 const getMyProfile = catchAsync(async (req: Request, res: Response) => {
     const user = req.user;
     const result = await ProfileServices.getMyProfile(user);
@@ -49,5 +68,6 @@ const updateMyProfile = catchAsync(async (req, res) => {
 export const ProfileController = {
     getMyProfile,
     updateMyProfile,
-    getOtherProfileFromDB
+    getOtherProfileFromDB,
+    createPremiumUser
 }

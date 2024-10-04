@@ -10,6 +10,7 @@ export type TUser = {
   email: string;
   password: string;
   status: keyof typeof USER_STATUS;
+  address?:string;
   passwordChangedAt?: Date;
   mobileNumber?: string;
   profilePhoto?: string;

@@ -42,6 +42,12 @@ const userSchema = new Schema<TUser, IUserModel>(
       type: String,
       required: true,
     },
+    
+      address:{
+        type:String,
+        
+      }
+    ,
     profilePhoto: {
       type: String,
       default: null
@@ -50,7 +56,7 @@ const userSchema = new Schema<TUser, IUserModel>(
       type: Boolean,
       default:false,
     },
-    follow:{
+     follow:{
       type: [Schema.Types.ObjectId],
       ref:"User",
       default:[],
