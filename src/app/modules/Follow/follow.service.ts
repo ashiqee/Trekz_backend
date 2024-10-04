@@ -1,11 +1,11 @@
 import { User } from '../User/user.model';
 
 //add follows
-const addFollowToDB = async (playLoad: {
+const addFollowToDB = async (payload: {
   userId: string;
   followId: string;
 }) => {
-  const { userId, followId } = playLoad;
+  const { userId, followId } = payload;
 
   const user = await User.findById(userId);
   const followUser = await User.findById(followId);
@@ -36,11 +36,11 @@ const addFollowToDB = async (playLoad: {
   return { message: 'Successfully following' };
 };
 
-const removeFollowFromDB = async (playLoad: {
+const removeFollowFromDB = async (payload: {
   userId: string;
   followId: string;
 }) => {
-  const { userId, followId } = playLoad;
+  const { userId, followId } = payload;
 
   const user = await User.findById(userId);
   const followUser = await User.findById(followId);

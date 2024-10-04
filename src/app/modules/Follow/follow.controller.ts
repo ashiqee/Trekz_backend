@@ -7,8 +7,8 @@ import { FollewerServices } from "./follow.service";
 
 
 const addFollow = catchAsync(async (req, res) => {
-  const playload = req.body
-    const result = await FollewerServices.addFollowToDB(playload);
+  const payload = req.body
+    const result = await FollewerServices.addFollowToDB(payload);
   
     sendResponse(res, {
       success: true,
@@ -19,8 +19,8 @@ const addFollow = catchAsync(async (req, res) => {
   });
 
 const removeFollow = catchAsync(async (req, res) => {
-  const playload = req.body
-    const result = await FollewerServices.removeFollowFromDB(playload);
+  const payload = req.body
+    const result = await FollewerServices.removeFollowFromDB(payload);
   
     sendResponse(res, {
       success: true,
