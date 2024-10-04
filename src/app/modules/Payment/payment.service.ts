@@ -9,14 +9,20 @@ const confirmationService = async (transactionId:string)=>{
     const verifyResponse = await verifyPayment(transactionId);
 
 
+   
     let result;
     let message= '';
 
-    if(verifyResponse && verifyResponse.pay_status =='Successful'){
-        result = await PremiumProfile.findByIdAndUpdate({transactionId},{
+
+    if(verifyResponse && verifyResponse.pay_status ==='Successful'){
+        
+        
+        result = await PremiumProfile.findOneAndUpdate({transactionId},{
             paymentStatus: "Paid"
         })
         const userId = result?.user;
+
+        
 
         if(result){
             await User.findByIdAndUpdate({_id:userId},{

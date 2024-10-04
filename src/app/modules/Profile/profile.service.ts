@@ -122,7 +122,7 @@ const createPremiumUserIntoDB = async (payload:{plan:string},userId:string) => {
   
         // Prepare the payment data
         const paymentData = {
-          transactionId,
+            transactionId,
           totalPrice,
           customerName: user.name,
           customerEmail: user.email,

@@ -8,6 +8,11 @@ const premiumProfileSchema = new Schema<IPremiumProfile>(
       required: true,
       ref: 'User',
     },
+    transactionId: {
+        type: String,
+        required: true,
+        unique: true, 
+      },
     subcriptionPlan:{
         type: String,
         enum: ['premium', 'gold', 'platinum'], 
@@ -24,9 +29,7 @@ const premiumProfileSchema = new Schema<IPremiumProfile>(
       type: String,
       default: 'Pending',
     },
-    transactionId: {
-      type: String,
-    },
+   
   },
   {
     timestamps: true,
