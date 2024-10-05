@@ -4,7 +4,7 @@ import { Comment, Post } from "../Post/post.model";
 
 
 
-const createComment = async (userId: string, postId: string, commentText: string) => {
+const createComment = async (userId: JwtPayload, postId: string, commentText: string) => {
  
  
   

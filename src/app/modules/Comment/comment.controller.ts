@@ -5,7 +5,7 @@ import { commentServices } from "./comment.service";
 
 
 const createCommentIntoDb = catchAsync(async (req, res) => {
-   const  userId = req.user
+   const  userId = req.user;
  
   
     const {postId,commentText} = req.body
