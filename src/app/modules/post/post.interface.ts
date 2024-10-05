@@ -11,7 +11,7 @@ export interface IPost extends Document {
   downVotes: string[]; 
   comments: IComment[];
   tags?: string[];
-  categories: string[];
+  category: string;
   
 }
 

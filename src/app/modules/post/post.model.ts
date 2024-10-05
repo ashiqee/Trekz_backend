@@ -56,8 +56,8 @@ const postSchema = new Schema<IPost>({
   postContent: {
     type: String,
   },
-  categories:{
-    type: [String],
+  category:{
+    type: String,
   },
   
   tags:{

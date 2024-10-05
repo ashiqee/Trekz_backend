@@ -5,10 +5,10 @@ import { commentServices } from "./comment.service";
 
 
 const createCommentIntoDb = catchAsync(async (req, res) => {
-
+   const  userId = req.user
  
   
-    const {userId,postId,commentText} = req.body
+    const {postId,commentText} = req.body
       const result = await commentServices.createComment(userId,postId,commentText);
     
       sendResponse(res, {
@@ -24,7 +24,7 @@ const deleteCommenFromDb = catchAsync(async (req, res) => {
 
       
   const commentId = req.params.id
-console.log(commentId);
+
 
       const result = await commentServices.deleteComment(commentId);
     

@@ -1,4 +1,5 @@
 
+import { JwtPayload } from "jsonwebtoken";
 import { Comment, Post } from "../Post/post.model";
 
 
@@ -93,7 +94,7 @@ const editComment = async (commentId: string, userId: string, commentText: strin
 
 
 
-  const replyToComment = async (commentId: string, userId: string, replyText: string) => {
+  const replyToComment = async (commentId: string, userId: JwtPayload, replyText: string) => {
     const comment = await Comment.findById(commentId);
   
     if (!comment) {

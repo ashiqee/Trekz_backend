@@ -36,6 +36,7 @@ const getOtherProfile = async (userId:string) => {
         path:"user",
         select:"name profilePhoto isVerified"
     })
+    .sort({createdAt : -1 })
 
     return {getUser,userPosts  };
 };
@@ -80,7 +81,7 @@ const updateMyProfile = async (
 
 // Profile verification and premium user 
 
-const createPremiumUserIntoDB = async (payload:{plan:string},userId:string) => {
+const createPremiumUserIntoDB = async (payload:{plan:string},userId:JwtPayload) => {
     const transactionId = `txn-${Date.now()}`;
   
     const orderData = { ...payload, transactionId }; 
