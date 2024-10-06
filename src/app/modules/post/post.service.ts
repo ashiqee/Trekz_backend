@@ -42,7 +42,7 @@ const searchPosts = async (query: Record<string, unknown>) => {
         const result = await posts.select('_id postContent images category tags');
         const formattedResult = result.map((post) => ({
           _id: post._id,
-          postContent: post?.postContent!.slice(0, 100), 
+          postContent: post?.postContent!.slice(0,70), 
           image: post.images?.[0], 
           categories: post?.category,
           tags: post.tags
