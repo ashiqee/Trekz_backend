@@ -36,10 +36,10 @@ const getAllPostFromDB = async (query: Record<string, unknown>) => {
 };
 const searchPosts = async (query: Record<string, unknown>) => {
   const posts = new QueryBuilder(Post.find(), query)
-        .search(['postContent', 'categories', 'tags'])
+        .search(['postContent', 'category', 'tags'])
         .build();
 
-        const result = await posts.select('_id postContent images categories tags');
+        const result = await posts.select('_id postContent images category tags');
         const formattedResult = result.map((post) => ({
           _id: post._id,
           postContent: post?.postContent!.slice(0, 100), 
