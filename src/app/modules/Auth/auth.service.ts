@@ -31,6 +31,7 @@ const registerUser = async (payload: TRegisterUser) => {
     role: newUser.role,
     status: newUser.status,
     profilePhoto: newUser.profilePhoto
+    
   };
 
   const accessToken = createToken(
@@ -188,7 +189,8 @@ const refreshToken = async (token: string) => {
     mobileNumber: user.mobileNumber,
     role: user.role,
     status: user.status,
-    profilePhoto: user.profilePhoto
+    profilePhoto: user.profilePhoto,
+    isVerified: user.isVerified
   };
 
   const accessToken = createToken(
