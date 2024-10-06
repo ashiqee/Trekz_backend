@@ -34,6 +34,22 @@ const getAllPostFromDB = async (query: Record<string, unknown>) => {
 
   return result;
 };
+const searchPosts = async (query: Record<string, unknown>) => {
+  const posts = new QueryBuilder(Post.find(), query)
+        .search(['postContent', 'categories', 'tags'])
+        .build();
+
+        const result = await posts.select('_id postContent images categories tags');
+        const formattedResult = result.map((post) => ({
+          _id: post._id,
+          postContent: post?.postContent!.slice(0, 100), 
+          image: post.images?.[0], 
+          categories: post?.category,
+          tags: post.tags
+        }));
+
+  return formattedResult;
+};
 
 const getAPostFromDB = async (id: string) => {
   const posts = await Post.findById(id).populate('user');
@@ -189,5 +205,6 @@ export const PostServices = {
   upvotePost,
   downVotesPost,
   updateAPostFromDB,
-  deleteAPostFromDB
+  deleteAPostFromDB,
+  searchPosts
 };

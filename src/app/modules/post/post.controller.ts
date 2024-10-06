@@ -60,6 +60,18 @@ const getAllPosts = catchAsync(async (req, res) => {
   });
 });
 
+//   get all post search api
+const getAllSearchPosts = catchAsync(async (req, res) => {
+  const data = await PostServices.searchPosts(req.query);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Search posts retrived Successfully',
+    data: data,
+  });
+});
+
 //   get Single post
 const getAPosts = catchAsync(async (req, res) => {
   const data = await PostServices.getAPostFromDB(req.params.id);
@@ -130,5 +142,6 @@ export const PostControllers = {
   upvotePostInPost,
   downVotesPostInPost,
   updateAPost,
-  deleteAPosts
+  deleteAPosts,
+  getAllSearchPosts
 };
