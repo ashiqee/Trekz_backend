@@ -72,6 +72,18 @@ const getAPosts = catchAsync(async (req, res) => {
   });
 });
 
+//   delete a Single post
+const deleteAPosts = catchAsync(async (req, res) => {
+  const data = await PostServices.deleteAPostFromDB(req.params.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Post deleted Successfully',
+    data: data,
+  });
+});
+
 //   get my posts
 const getMyPosts = catchAsync(async (req, res) => {
   const data = await PostServices.getMyPostFormDB(req.query, req.params.id);
@@ -118,4 +130,5 @@ export const PostControllers = {
   upvotePostInPost,
   downVotesPostInPost,
   updateAPost,
+  deleteAPosts
 };

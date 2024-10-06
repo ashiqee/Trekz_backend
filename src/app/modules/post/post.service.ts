@@ -41,6 +41,16 @@ const getAPostFromDB = async (id: string) => {
   return posts;
 };
 
+// delete post 
+const deleteAPostFromDB = async (id: string) => {
+
+
+  
+  const posts = await Post.deleteOne({_id:id});
+
+  return posts;
+};
+
 // edit a post
 
 const updateAPostFromDB = async (
@@ -179,4 +189,5 @@ export const PostServices = {
   upvotePost,
   downVotesPost,
   updateAPostFromDB,
+  deleteAPostFromDB
 };

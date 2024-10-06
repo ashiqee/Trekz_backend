@@ -27,6 +27,10 @@ router.patch(
 );
 
 
+router.delete('/delete/:id',auth(USER_ROLE.USER,USER_ROLE.ADMIN) ,
+ PostControllers.deleteAPosts);
+
+
 router.get('/', PostControllers.getAllPosts);
 
 router.get('/:id', auth(USER_ROLE.USER,USER_ROLE.ADMIN), PostControllers.getAPosts);
