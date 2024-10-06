@@ -12,6 +12,7 @@ export interface IPost extends Document {
   comments: IComment[];
   tags?: string[];
   category: string;
+  postId?:string
   
 }
 

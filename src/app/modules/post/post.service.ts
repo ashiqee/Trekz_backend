@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { IPost } from './post.interface';
 import { Post } from './post.model';
 import { QueryBuilder } from '../../builder/QueryBuilder';
@@ -22,13 +23,13 @@ const getAllPostFromDB = async (query: Record<string, unknown>) => {
     .populate({
       path: 'comments',
       populate: {
-        path: 'user', 
-        select: 'name profilePhoto isVerified', 
+        path: 'user',
+        select: 'name profilePhoto isVerified',
       },
     })
     .populate({
-      path: 'user', 
-      select: 'name profilePhoto isVerified', 
+      path: 'user',
+      select: 'name profilePhoto isVerified',
     });
 
   return result;
@@ -36,6 +37,42 @@ const getAllPostFromDB = async (query: Record<string, unknown>) => {
 
 const getAPostFromDB = async (id: string) => {
   const posts = await Post.findById(id).populate('user');
+
+  return posts;
+};
+
+// edit a post
+
+const updateAPostFromDB = async (
+  id: string,
+  payload:IPost
+) => {
+  const {postId ,...upPayload } = payload;
+
+ 
+  if(postId!==id){
+      throw new Error("post not found")
+  }
+
+  const filteredPayload = Object.fromEntries(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Object.entries(upPayload).filter(([_, value]) => {
+   return value !== null && value !== undefined && 
+             (typeof value !== 'string' || value.trim() !== '') && 
+             (Array.isArray(value) ? value.length > 0 : true);
+    })
+  );
+
+
+  if (Object.keys(filteredPayload).length === 0) {
+    throw new Error("No valid fields to update");
+  }
+  
+  const posts = await Post.findOneAndUpdate(
+    { _id: id },
+    { ...filteredPayload },
+    { new: true }
+  );
 
   return posts;
 };
@@ -107,8 +144,6 @@ const downVotesPost = async (postId: string, userId: string) => {
       throw new Error('Post not found');
     }
 
-  
-
     if (post.downVotes.includes(userId)) {
       await Post.updateOne(
         { _id: postId },
@@ -143,4 +178,5 @@ export const PostServices = {
   getMyPostFormDB,
   upvotePost,
   downVotesPost,
+  updateAPostFromDB,
 };

@@ -17,6 +17,16 @@ router.post(
   
   PostControllers.createPostIntoDB
 );
+
+router.patch(
+  '/update-post/:id',
+  multerUpload.array('images',5),
+  auth(USER_ROLE.USER,USER_ROLE.ADMIN),
+  
+  PostControllers.updateAPost
+);
+
+
 router.get('/', PostControllers.getAllPosts);
 
 router.get('/:id', auth(USER_ROLE.USER,USER_ROLE.ADMIN), PostControllers.getAPosts);
