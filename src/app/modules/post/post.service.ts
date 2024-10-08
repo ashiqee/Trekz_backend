@@ -34,6 +34,9 @@ const getAllPostFromDB = async (query: Record<string, unknown>) => {
 
   return result;
 };
+
+
+// debounce and optimze search 
 const searchPosts = async (query: Record<string, unknown>) => {
   const posts = new QueryBuilder(Post.find(), query)
         .search(['postContent', 'category', 'tags'])
@@ -57,6 +60,15 @@ const getAPostFromDB = async (id: string) => {
   return posts;
 };
 
+
+
+// get post categoris
+const getPostCategories = async () => {
+
+   const categories = await Post.distinct('category');
+
+  return categories;
+};
 // delete post 
 const deleteAPostFromDB = async (id: string) => {
 
@@ -206,5 +218,6 @@ export const PostServices = {
   downVotesPost,
   updateAPostFromDB,
   deleteAPostFromDB,
-  searchPosts
+  searchPosts,
+  getPostCategories
 };

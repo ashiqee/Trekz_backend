@@ -59,6 +59,17 @@ const getAllPosts = catchAsync(async (req, res) => {
     data: data,
   });
 });
+// get all  catergory 
+const getAllPostsCategories = catchAsync(async (req, res) => {
+  const data = await PostServices.getPostCategories();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'All posts catergory retrived Successfully',
+    data: data,
+  });
+});
 
 //   get all post search api
 const getAllSearchPosts = catchAsync(async (req, res) => {
@@ -143,5 +154,6 @@ export const PostControllers = {
   downVotesPostInPost,
   updateAPost,
   deleteAPosts,
-  getAllSearchPosts
+  getAllSearchPosts,
+  getAllPostsCategories
 };

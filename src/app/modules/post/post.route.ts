@@ -32,6 +32,7 @@ router.delete('/delete/:id',auth(USER_ROLE.USER,USER_ROLE.ADMIN) ,
 
 
 router.get('/', PostControllers.getAllPosts);
+router.get('/categories', PostControllers.getAllPostsCategories);
 
 router.get('/search', PostControllers.getAllSearchPosts);
 

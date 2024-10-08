@@ -49,11 +49,16 @@ export class QueryBuilder<T> {
     }
 
 
-    if(sortBy === 'upVotes'){
-      this.modelQuery = this.modelQuery.sort({upVotes:-1});
-    }else{
+    if (sortBy === 'upVotes') {
       
-      this.modelQuery = this.modelQuery.sort(sortBy);
+      
+      this.modelQuery = this.modelQuery.sort({ upVotes: -1 }); 
+    } else if (sortBy === 'comments') {
+      this.modelQuery = this.modelQuery.sort({ comments: -1 }); 
+    } else if (sortBy === 'date') {
+      this.modelQuery = this.modelQuery.sort({ createdAt: -1 }); 
+    } else {
+      this.modelQuery = this.modelQuery.sort(sortBy); 
     }
 
     return this;
@@ -72,7 +77,7 @@ export class QueryBuilder<T> {
 
   filter() {
     const queryObj = { ...this.query };
-    const excludeFields = ['searchTerm', 'page', 'limit', 'sortBy', 'fields'];
+    const excludeFields = ['searchTerm', 'page', 'limit', 'sortBy', 'fields','premium'];
 
     excludeFields.forEach((e) => delete queryObj[e]);
 
